@@ -1,0 +1,13 @@
+site_name: Doc example
+site_description: Description of the project
+
+theme:
+  name: material
+  language: pt-BR
+  palette:
+    primary: indigo
+    accent: indigo
+
+nav:
+  - Home: index.md
+  - About: about.md
