@@ -1,13 +1,44 @@
-site_name: Doc example
-site_description: Description of the project
+site_name: Documentação NeedUK
+site_description: Documentação Técnica Integral do Sistema NeedUK
+site_author: Equipe NeedUK
+repo_url: https://rogerwa11.github.io/mkdocs-github-actions
+edit_uri: edit/main/docs/
 
 theme:
   name: material
   language: pt-BR
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - content.code.copy
   palette:
-    primary: indigo
-    accent: indigo
+    - scheme: default
+      primary: indigo
+      accent: blue
+    - scheme: slate # Modo escuro opcional
+      primary: indigo
+      accent: blue
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - tables
+  - attr_list
 
 nav:
-  - Home: index.md
-  - About: about.md
+  - Início: index.md
+  - Produto & Requisitos: requisitos.md
+  - Arquitetura & Dados: arquitetura.md
+  - API & Integração: api.md
+  - Infra & Segurança: seguranca-infra.md
+  - Qualidade: qualidade-testes.md
+  - Gestão & Governança: gestao.md
