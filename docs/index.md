@@ -129,8 +129,6 @@ Intermediar conexões entre estudantes, recrutadores e gestores universitários,
 
 # 5. Requisitos Detalhados
 
-> Os requisitos a seguir estão organizados com número, descrição, pré-condição e critérios de aceitação (Formato: [RFxx] ou [RNFxx]).
-
 ## 5.1 Requisitos Funcionais (RF)
 
 ### RF01 — Autenticação e Sessões
