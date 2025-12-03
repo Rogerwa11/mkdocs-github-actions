@@ -268,7 +268,7 @@ Arquitetura **modular** com separação clara entre UI (Next.js), API (Server Co
 
 > Abaixo segue a **modelagem relacional** com campos, tipos sugeridos e índices. Inclui também um **exemplo de schema Prisma**.
 
-## 7.1 Tabelas Principais (detalhadas)
+## 7.1 Tabelas Principais
 
 ### `users`
 
@@ -373,7 +373,7 @@ Arquitetura **modular** com separação clara entre UI (Next.js), API (Server Co
 
 ---
 
-## 7.2 Exemplo de Schema Prisma (simplificado)
+## 7.2 Exemplo de Schema Prisma
 
 ```prisma
 generator client {
@@ -711,7 +711,7 @@ export const ApplySchema = z.object({
 
 ---
 
-# 10. Fluxos Críticos (sequências passo a passo)
+# 10. Fluxos Críticos 
 
 ## 10.1 Fluxo: Registro → Vaga → Candidatura → Decisão
 
@@ -904,7 +904,7 @@ export const ApplySchema = z.object({
 * **Sprint Backlog** (itens comprometidos)
 * **Definition of Done (DoD)**: código com testes, PR aprovado, documentação atualizada, build passando.
 
-## 16.4 RACI (exemplo)
+## 16.4 RACI 
 
 | Activity               | Responsible |  Accountable |           Consulted | Informed |
 | ---------------------- | ----------: | -----------: | ------------------: | -------: |
