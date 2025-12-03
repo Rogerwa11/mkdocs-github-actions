@@ -1,4 +1,5 @@
-DOCUMENTAÇÃO DO SISTEMA NEEDUK
+# Documento de Especificação e Arquitetura do Sistema NEEDUK
+
 
 # **1. Introdução**
 
@@ -313,6 +314,5 @@ Metodologia híbrida baseada em Scrum:
 * Chat interno
 * Integração com Sistemas Externos
 
-
-
+🚀 NeedUK — Conectando talentos, empresas e universidades com tecnologia.
 
