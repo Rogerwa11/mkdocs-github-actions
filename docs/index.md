@@ -2,271 +2,282 @@
 
 # Documentação Técnica Integral do Sistema NeedUK
 
-**Versão:** 1.0.0
-**Data:** 2025-12-03
-**Autores:** Roger (Dev Líder), Luan (Analista de Documentação / Dev Auxiliar), Nicolly (Analista de Documentação), Fernanda (Analista de Documentação)
+**Versão:** 1.0.0  
+**Data:** 2025-12-03  
+**Autores:** Roger (Dev Líder), Luan (Analista de Documentação / Dev Auxiliar), Nicolly (Analista de Documentação), Fernanda (Analista de Documentação)  
 **Classificação:** Confidencial — Uso Interno / Acadêmico
 
 ---
 
-## Sumário
+## Visão Executiva
 
-1. [Introdução](#1-introdução)
-2. [Visão Geral do Sistema](#2-visão-geral-do-sistema)
-3. [Escopo e Limitações](#3-escopo-e-limitações)
-4. [Público-Alvo e Perfis de Usuário](#4-público-alvo-e-perfis-de-usuário)
-5. [Requisitos Detalhados](#5-requisitos-detalhados)
+O NeedUK é uma plataforma acadêmica de empregabilidade que conecta estudantes, recrutadores e gestores universitários. Esta documentação consolida decisões estratégicas, requisitos técnicos e padrões operacionais necessários para operação, auditoria e evolução do produto. Utilize o sumário temático abaixo para navegar rapidamente pelos tópicos conforme sua função (produto, arquitetura, segurança, operações ou governança).
 
-   * Funcionais
-   * Não-funcionais
-6. [Arquitetura Técnica e Lógica](#6-arquitetura-técnica-e-lógica)
+---
 
-   * Diagrama lógico (ASCII)
-   * Componentes e responsabilidades
+## Sumário Temático
+
+1. [Introdução](#1-introducao)
+2. [Visão Geral do Sistema](#2-visao-geral-do-sistema)
+3. [Escopo e Limitações](#3-escopo-e-limitacoes)
+4. [Público-Alvo e Perfis de Usuário](#4-publico-alvo-e-perfis-de-usuario)
+5. [Requisitos Detalhados](#5-requisitos-detalhados)  
+   5.1 Funcionais · 5.2 Não Funcionais
+6. [Arquitetura Técnica e Lógica](#6-arquitetura-tecnica-e-logica)  
+   Diagrama · Componentes · Responsabilidades
 7. [Modelagem de Dados (ERD e Esquema)](#7-modelagem-de-dados-erd-e-esquema)
-
-   * Tabelas detalhadas com campos, tipos e índices
-   * Prisma schema (exemplo)
-8. [API — Endpoints, Contratos e Exemplos](#8-api--endpoints-contratos-e-exemplos)
-
-   * Autenticação
-   * Perfis
-   * Atividades
-   * Vagas
-   * Candidaturas
-   * Notificações
-   * Medalhas
-   * Erros e códigos comuns
-9. [Validação e Schemas (Zod)](#9-validação-e-schemas-zod)
-10. [Fluxos Críticos (sequências passo a passo)](#10-fluxos-críticos-sequências-passo-a-passo)
-11. [Segurança, Criptografia e Conformidade](#11-segurança-criptografia-e-conformidade)
-12. [Qualidade, Testes e Métricas](#12-qualidade-testes-e-métricas)
+8. [API, Endpoints, Contratos e Exemplos](#8-api-endpoints-contratos-e-exemplos)
+9. [Validação e Schemas (Zod)](#9-validacao-e-schemas-zod)
+10. [Fluxos Críticos](#10-fluxos-criticos)  
+    Registro → Vagas → Candidatura · Atividades Colaborativas
+11. [Segurança, Criptografia e Conformidade](#11-seguranca-criptografia-e-conformidade)
+12. [Qualidade, Testes e Métricas](#12-qualidade-testes-e-metricas)
 13. [Infraestrutura, Deploy e CI/CD](#13-infraestrutura-deploy-e-cicd)
-14. [Operações e Observabilidade](#14-operações-e-observabilidade)
-15. [Backup, Recovery e Plano de Continuidade](#15-backup-recovery-e-plano-de-continuidade)
-16. [Gestão de Projeto e Governança](#16-gestão-de-projeto-e-governança)
-17. [Riscos, Mitigações e Registro](#17-riscos-mitigacões-e-registro)
-18. [Roadmap e Evolução](#18-roadmap-e-evolução)
-19. [Padrões de Código e Processos de Contribuição](#19-padrões-de-código-e-processos-de-contribuição)
-20. [Anexos (Modelos de Documentos, Runbooks, Checklist)](#20-anexos-modelos-de-documentos-runbooks-checklist)
+14. [Operações e Observabilidade](#14-operacoes-e-observabilidade)
+15. [Backup, Recovery e Continuidade](#15-backup-recovery-e-plano-de-continuidade)
+16. [Gestão de Projeto e Governança](#16-gestao-de-projeto-e-governanca)
+17. [Riscos, Mitigações e Registro](#17-riscos-mitigacoes-e-registro)
+18. [Roadmap e Evolução](#18-roadmap-e-evolucao)
+19. [Padrões de Código e Processos de Contribuição](#19-padroes-de-codigo-e-processos-de-contribuicao)
+20. [Anexos (Modelos, Runbooks e Checklists)](#20-anexos-modelos-runbooks-e-checklists)
 
 ---
 
 # 1. Introdução
 
+> **Resumo:** descreve o propósito, alcance e padrões normativos que balizam toda a documentação técnica do NeedUK.
+
 ### 1.1 Objetivo do Documento
 
-Este documento tem por finalidade especificar de maneira formal, completa e técnica o sistema **NeedUK**. Descreve requisitos, arquitetura, design de dados, contratos de API, políticas de segurança, estratégias de teste, governança, operação e roadmap, de forma que terceiros (desenvolvedores, auditores, avaliadores ou futuros mantenedores) obtenham entendimento suficiente para manutenção, evolução e auditoria do sistema.
+Consolidar uma visão única, formal e atualizada do sistema **NeedUK**, detalhando requisitos, arquitetura, design de dados, contratos de API, políticas de segurança, estratégias de qualidade e governança. O material serve como referência oficial para equipes de desenvolvimento, auditoria, segurança, operações e stakeholders envolvidos na evolução do produto.
 
 ### 1.2 Alcance
 
-Cobertura técnica e gerencial do produto NeedUK em sua versão atual (autenticação, perfis, atividades colaborativas, vagas e candidaturas, notificações em tempo real, dashboard responsivo). Inclui também planejamento pormenorizado para o módulo de Currículos (planejado). Não inclui: código-fonte exato (embora padrões e exemplos sejam fornecidos), nem configurações privadas de provedores (credenciais/segredos).
+A documentação abrange a versão atual do NeedUK — autenticação, gestão de perfis, atividades colaborativas, vagas, candidaturas, notificações em tempo real e dashboards responsivos — e antecipa diretrizes do módulo de Currículos. Ficam fora de escopo o código-fonte integral e configurações sigilosas de provedores, embora melhores práticas e padrões sejam descritos.
 
 ### 1.3 Padrões e Referências
 
-* Padrões de requisitos: IEEE 830 / ISO/IEC 29110 (adotado como referência)
-* Metodologia de gestão: Scrum híbrido com entregas quinzenais
-* Segurança: OWASP Top 10 como baseline de mitigação
+- Requisitos: IEEE 830 / ISO/IEC 29110  
+- Gestão ágil: Scrum híbrido com sprints quinzenais  
+- Segurança: OWASP Top 10 como baseline mínimo de mitigação
 
 ---
 
 # 2. Visão Geral do Sistema
 
+> **Resumo:** apresenta o posicionamento do NeedUK no ecossistema acadêmico-profissional e destaca funcionalidades-chave distribuídas por persona.
+
 ### 2.1 Propósito
 
-Intermediar conexões entre estudantes, recrutadores e gestores universitários, suportando ciclos completos de autenticação, gerenciamento de perfis, atividades colaborativas, gestão de vagas, candidaturas e notificações em tempo real, para aumento de empregabilidade e colaboração acadêmica.
+Promover conexões qualificadas entre estudantes, recrutadores e gestores universitários. O sistema oferece autenticação segura, gestão de perfis completos, organização de atividades colaborativas, administração de vagas e candidaturas, além de notificações em tempo real que sustentam um ciclo contínuo de empregabilidade acadêmica.
 
 ### 2.2 Principais Funcionalidades
 
-* Autenticação unificada e sessões seguras (Better Auth)
-* Perfis diferenciados (Aluno, Recrutador, Gestor) com edição completa
-* Atividades colaborativas: criação, convites por e-mail, transferência de liderança, observações, links, medalhas
-* Vagas: criação, rascunhos, filtros por curso, ordenação customizada, destaque de vagas aceitas
-* Candidaturas: envio com carta, decisões dos recrutadores, histórico e notificações
-* Notificações em tempo real e limpeza automática
-* Dashboard responsivo por perfil
-* Currículo: página planejada (especificada)
+- Autenticação unificada com Better Auth e gerenciamento de sessões resiliente  
+- Perfis segmentados (Aluno, Recrutador, Gestor) com edição abrangente  
+- Atividades colaborativas com convites, transferência de liderança, observações e medalhas  
+- Vagas com rascunhos, filtros avançados por curso e ordenação customizada  
+- Candidaturas com carta de apresentação, histórico de decisões e notificações  
+- Notificações em tempo real com políticas de limpeza automática  
+- Dashboards responsivos por perfil com métricas e atalhos operacionais  
+- Currículos estruturados (módulo planejado) com suporte futuro a exportação
 
 ---
 
 # 3. Escopo e Limitações
 
-### 3.1 Escopo (o que está incluído)
+> **Resumo:** delimita fronteiras funcionais e aponta evoluções planejadas para orientar expectativas de stakeholders.
 
-* Back-end (API) com endpoints REST e validação via Zod
-* Front-end em Next.js (App Router + Server Components)
-* Persistência em PostgreSQL via Prisma (Supabase)
-* Sistema de notificações em tempo real (WebSocket / Realtime do Supabase ou WebSocket custom)
-* Autenticação com Better Auth
-* Validações robustas e testes unitários/integrados
+### 3.1 Escopo Incluído
 
-### 3.2 Limitações (o que NÃO está incluído nesta versão)
+- Backend REST com validação via Zod  
+- Frontend Next.js (App Router + Server/Client Components)  
+- Persistência PostgreSQL (Supabase) via Prisma  
+- Notificações em tempo real (Supabase Realtime ou WebSocket dedicado)  
+- Autenticação e autorização com Better Auth  
+- Validações, testes unitários e integrados obrigatórios
 
-* Módulo de Currículos (em planejamento; descrição completa no roadmap)
-* Integração nativa com redes sociais (LinkedIn, Google OAuth)
-* Chat P2P (planejado para roadmap posterior)
-* Sistema de matching baseado em ML (futuro)
+### 3.2 Fora de Escopo (versão atual)
+
+- Módulo de Currículos (detalhado no roadmap)  
+- Integração nativa com provedores sociais (LinkedIn, Google OAuth)  
+- Chat ponto a ponto em tempo real  
+- Recomendação inteligente de vagas baseada em ML
 
 ---
 
 # 4. Público-Alvo e Perfis de Usuário
 
+> **Resumo:** define personas, responsabilidades e níveis de acesso utilizados pelo modelo RBAC.
+
 ### 4.1 Perfis
 
-* **Aluno**: candidato às vagas, participa de atividades, inclui dados acadêmicos.
-* **Recrutador**: publica vagas, gerencia candidaturas, toma decisões.
-* **Gestor**: membro institucional com privilégios extra (conceder medalhas, administrar atividades).
-* **Admin / DevOps**: manutenção de sistema, observabilidade e deploy.
+- **Aluno:** gerencia currículo acadêmico, participa de atividades e se candidata a vagas.  
+- **Recrutador:** publica oportunidades, analisa candidaturas e comunica decisões.  
+- **Gestor:** representa a instituição, concede medalhas e modera atividades colaborativas.  
+- **Admin / DevOps:** sustenta operações de infraestrutura, observabilidade e governança técnica.
 
-### 4.2 Permissões Principais (RBAC)
+### 4.2 Permissões (RBAC)
 
-* **Aluno:** visualizar vagas, candidatar-se, gerenciar perfil, participar de atividades.
-* **Recrutador:** CRUD de vagas, avaliar candidaturas, enviar mensagens de decisão, visualizar métricas de suas vagas.
-* **Gestor:** tudo de Recrutador + concessão de medalhas, gerenciamento ampliado de atividades.
-* **Admin:** acesso administrativo (logs, limpeza, gerenciamento de usuários).
+- **Aluno:** acesso a vagas, candidatura, gestão de perfil e participação em atividades.  
+- **Recrutador:** CRUD de vagas, avaliação de candidaturas e consulta de métricas próprias.  
+- **Gestor:** privilégios de Recrutador + concessão de medalhas e curadoria ampliada de atividades.  
+- **Admin:** administração avançada (logs, manutenção de usuários, execução de rotinas críticas).
 
 ---
 
 # 5. Requisitos Detalhados
 
+> **Resumo:** consolida requisitos funcionais e não funcionais priorizados para garantir valor de negócio, qualidade e conformidade.
+
 ## 5.1 Requisitos Funcionais (RF)
+
+!!! info "Mapa rápido dos RFs"
+    | Código | Tema                       | Status | Responsável técnico |
+    | ------ | -------------------------- | ------ | ------------------- |
+    | RF01   | Autenticação e sessões     | Ativo  | Plataforma          |
+    | RF02   | Gestão de perfis           | Ativo  | Frontend & API      |
+    | RF03   | Atividades colaborativas   | Ativo  | Produto Colaborativo |
+    | RF04   | Vagas                      | Ativo  | Recrutamento        |
+    | RF05   | Candidaturas               | Ativo  | Recrutamento        |
+    | RF06   | Notificações em tempo real | Ativo  | Realtime            |
+    | RF07   | Dashboards                 | Ativo  | Analytics           |
+    | RF08   | Currículos (planejado)     | Planejado | Produto Colaborativo |
 
 ### RF01 — Autenticação e Sessões
 
-* **Descrição:** O sistema deve permitir registro, login, logout e recuperação de senha.
-* **Pré-condição:** Acesso ao endpoint de auth.
-* **Critérios de Aceitação:**
-
-  * Registro cria usuário e dispara verificação por e-mail.
-  * Login retorna sessão válida (cookie HttpOnly + token).
-  * Rotas protegidas retornam 401 para usuários não autenticados.
-  * Implementação via Better Auth para sessions + refresh tokens.
-* **Notas de Implementação:** Tokens com expiração curta (ex.: 15 min) + refresh seguro; logout deve invalidar o refresh no servidor.
+- **Descrição:** garantir registro, login, logout e recuperação de acesso.  
+- **Pré-condição:** disponibilidade dos endpoints de autenticação.  
+- **Critérios de aceitação:**  
+  - Registro dispara e-mail de verificação.  
+  - Login retorna sessão válida (cookie HttpOnly + token).  
+  - Rotas protegidas negam acesso com 401 a usuários não autenticados.  
+  - Implementação baseada em Better Auth para sessões + refresh tokens.  
+- **Notas de implementação:** tokens curtos (≤ 15 min), refresh seguro, logout invalida refresh no servidor.
 
 ### RF02 — Gestão de Perfis
 
-* **Descrição:** Usuário deve visualizar e editar perfil (dados pessoais, formação, foto, contadores de medalhas).
-* **Campos Mínimos:** nome, email, curso, semestre, bio, foto, links.
-* **Critérios:** Alterações refletidas imediatamente (eventual consistency aceita para cache).
+- **Descrição:** permitir visualização e edição de dados pessoais, acadêmicos e reputacionais.  
+- **Campos mínimos:** nome, e-mail, curso, semestre, bio, foto, links relevantes.  
+- **Critérios:** alterações refletidas imediatamente; admite consistência eventual para camadas de cache.
 
 ### RF03 — Atividades Colaborativas
 
-* **Descrição:** Criar atividades com título, descrição, data/hora, visibilidade, liderança, convites por e-mail, observações, links.
-* **Fluxos:** criar → convidar → aceitar → participar → observar → conceder medalha.
-* **Regras:** Apenas líder pode transferir liderança; gestor pode conceder medalha.
+- **Descrição:** criar e gerenciar atividades com título, descrição, horários, visibilidade e lideranças.  
+- **Fluxo padrão:** criar → convidar → aceitar → participar → registrar observações/links → conceder medalhas.  
+- **Regras:** somente o líder transfere liderança; gestores concedem medalhas.
 
 ### RF04 — Vagas
 
-* **Descrição:** CRUD de vagas; rascunhos; filtros avançados (curso, palavra-chave, status); ordenação personalizada.
-* **Regras Especiais:** Vagas aceitas por um candidato permanecem visíveis para o mesmo (mesmo se fechadas) e aparecem no topo.
+- **Descrição:** CRUD completo com rascunhos, filtros por curso/palavras-chave/status e ordenação customizada.  
+- **Regras especiais:** vagas aceitas permanecem visíveis para o candidato (mesmo fechadas) e ganham destaque no topo.
 
 ### RF05 — Candidaturas
 
-* **Descrição:** Envio com carta de apresentação e links; histórico de decisões; notificações; possibilidade de retirar candidatura.
-* **Estados:** PENDENTE → ACEITO / RECUSADO → (opcional) RETIRADO.
+- **Descrição:** submissão com carta de apresentação, links e anexos; registro de histórico e notificações.  
+- **Estados:** `PENDENTE` → `ACEITO` / `RECUSADO` → (opcional) `RETIRADO`.
 
 ### RF06 — Notificações em Tempo Real
 
-* **Descrição:** Notificações de convites, decisões, medalhas e atividades.
-* **Comportamento:** entrega instantânea via websocket; fallback para polling caso não haja conexão.
-* **Limpeza:** Notificações lidas e com data superior a X dias (configurável) são elegíveis para limpeza automática.
+- **Descrição:** comunicar convites, decisões, medalhas e eventos críticos em tempo real.  
+- **Comportamento:** entrega via WebSocket com fallback para polling.  
+- **Limpeza:** notificações lidas e antigas (X dias configurável) entram em rotina de limpeza automática.
 
-### RF07 — Dashboard
+### RF07 — Dashboards
 
-* **Descrição:** Painel personalizado por perfil com resumo (vagas recentes, candidaturas, atividades, notificações).
-* **Métricas:** contador de candidaturas, taxa de aceitação, atividades ativas.
+- **Descrição:** painel adaptado por perfil com visão de vagas, candidaturas, atividades e alertas.  
+- **Métricas:** contadores de candidaturas, taxa de aceitação, atividades ativas, notificações pendentes.
 
-### RF08 — Currículo (planejado)
+### RF08 — Currículos (Planejado)
 
-* **Descrição:** CRUD de currículos estruturados; upload de arquivos; compartilhamento via link; export para PDF.
-* **Status:** Em especificação detalhada (secção Roadmap).
+- **Descrição:** CRUD de currículos estruturados, upload de arquivos, compartilhamento por link e exportação em PDF.  
+- **Status:** em especificação detalhada (referência em Roadmap).
 
-## 5.2 Requisitos Não-Funcionais (RNF)
+## 5.2 Requisitos Não Funcionais (RNF)
+
+!!! note "Metas globais de RNF"
+    - **Desempenho:** < 300 ms (p95) para 500 usuários simultâneos.  
+    - **Disponibilidade:** 99% com monitoramento automatizado.  
+    - **Segurança:** OWASP Top 10 como linha de base.  
+    - **Qualidade:** cobertura de testes ≥ 70% nos módulos críticos.
 
 ### RNF01 — Desempenho
 
-* **Meta:** 95% das requisições devem responder < 300ms em condições normais (pico de 500 usuários simultâneos).
+- **Meta:** 95% das requisições respondem em < 300 ms considerando até 500 usuários simultâneos.
 
 ### RNF02 — Escalabilidade
 
-* **Meta:** Sistema preparado para escalabilidade horizontal; conexões de DB com pool adequado; cache (Redis) para endpoints de leitura intensiva.
+- **Meta:** arquitetura apta a escala horizontal, com pool de conexões e cache Redis para cenários de alta leitura.
 
 ### RNF03 — Segurança
 
-* **Requisitos:** HTTPS obrigatório, proteção CSRF, sanitização de inputs, hashing de senhas (bcrypt/argon2), proteção contra brute-force (rate limiting).
+- **Requisitos:** HTTPS obrigatório, proteção CSRF, sanitização de inputs, hashing (bcrypt/argon2), rate limiting anti brute-force.
 
 ### RNF04 — Disponibilidade
 
-* **SLA:** Disponibilidade alvo de 99% (monitoramento via UptimeRobot/Prometheus).
+- **SLA:** alvo de 99% com monitoramento contínuo (UptimeRobot/Prometheus).
 
 ### RNF05 — Manutenibilidade
 
-* **Requisitos:** Código em TypeScript com cobertura mínima de testes unitários de 70% para módulos críticos; PRs code-reviewed obrigatórios; linting via ESLint.
+- **Requisitos:** código TypeScript com ≥ 70% de cobertura unitária nos módulos críticos, revisão obrigatória de PRs e linting via ESLint.
 
-### RNF06 — Usabilidade / Acessibilidade
+### RNF06 — Usabilidade e Acessibilidade
 
-* Conformidade com WCAG 2.1 AA em telas principais (login, perfil, candidatura).
+- **Requisitos:** conformidade com WCAG 2.1 AA em telas prioritárias (login, perfil, candidatura).
 
 ---
 
 # 6. Arquitetura Técnica e Lógica
 
+> **Resumo:** apresenta a macroarquitetura, os componentes principais e suas responsabilidades na plataforma.
+
 ## 6.1 Visão Geral
 
-Arquitetura **modular** com separação clara entre UI (Next.js), API (Server Components / API Routes), domínio (lib/*) e persistência (Prisma / PostgreSQL).
+Arquitetura modular com fronteiras claras entre experiência do usuário (Next.js), lógica de domínio (camada `lib/*`), serviços de API (Server Components e API Routes) e persistência (Prisma + PostgreSQL).
 
 ## 6.2 Diagrama Lógico (ASCII)
 
 ```
-+-----------------------+         +------------------+         +--------------------+
-|   Browser / Client    | <-----> |   Next.js App    | <-----> |    Supabase / DB   |
-| (React, Tailwind UI)  | WebSocket| (Server/Client) |  REST   |  PostgreSQL + Realtime |
-+-----------------------+         +------------------+         +--------------------+
-        |  ^                              |  ^                        |  ^
-        |  |                              |  |                        |  |
-        v  |                              v  |                        v  |
-+-----------------------+         +------------------+         +--------------------+
-|  CDN / Assets (Vercel)|         |  Redis Cache     |         |  Object Storage    |
-+-----------------------+         +------------------+         +--------------------+
++-----------------------+         +------------------+         +------------------------+
+|   Browser / Client    | <-----> |    Next.js App   | <-----> |     Supabase / DB      |
+| (React, Tailwind UI)  | WebSocket| (Server/Client) |  REST   | PostgreSQL + Realtime  |
++-----------------------+         +------------------+         +------------------------+
+        |  ^                           |   ^                          |    ^
+        |  |                           |   |                          |    |
+        v  |                           v   |                          v    |
++-----------------------+         +------------------+         +------------------------+
+|  CDN / Assets (Vercel)|         |   Redis Cache    |         |   Object Storage (S3)  |
++-----------------------+         +------------------+         +------------------------+
 ```
 
 ## 6.3 Componentes e Responsabilidades
 
-* **Frontend (Next.js)**
+- **Frontend (Next.js):**  
+  Server Components para SSR/SSG, App Router para navegação, biblioteca de componentes em `components/ui/` e hooks em `hooks/` (`useAuth`, `useNotifications`).
 
-  * Server Components para SSR/SSG; App Router para navegação; pages para landing e auth flows.
-  * Component library em `components/ui/` (botões, inputs, modais, toast, tabelas).
-  * Hooks personalizados em `hooks/` (useAuth, useNotifications).
+- **API / Backend:**  
+  Rotas em `src/app/api/` para domínios de autenticação, perfil, atividades, vagas e notificações. Regras de negócio concentradas em `lib/` com validações via Zod.
 
-* **API / Backend**
+- **Banco de Dados:**  
+  PostgreSQL (Supabase) orquestrado pelo Prisma Client, com entidades centrais `User`, `Vacancy`, `Application`, `Activity`, `Notification` e `Medal`.
 
-  * API Routes em `src/app/api/` (auth, profile, activities, vacancies, notifications).
-  * Business logic em `lib/` (serviços, domain).
-  * Validation via Zod.
+- **Realtime / Notificações:**  
+  Streaming via Supabase Realtime ou WebSocket dedicado, com fallback para SSE/long-polling.
 
-* **Banco de Dados (Supabase/Postgres + Prisma)**
+- **Cache:**  
+  Redis opcional para respostas intensivas de leitura e sessões.
 
-  * Prisma Client gerado (`npx prisma generate`).
-  * Esquema com entidades centrais (User, Vacancy, Application, Activity, Notification, Medal).
+- **Storage:**  
+  Supabase Storage ou Amazon S3 para uploads de imagens de perfil e currículos.
 
-* **Realtime / Notificações**
-
-  * Supabase Realtime ou WebSocket custom para notificações push.
-  * Fallback: long-polling via SSE.
-
-* **Cache**
-
-  * Redis para cache de consultas frequentes e sessões (opcional).
-
-* **Storage**
-
-  * Supabase Storage ou S3 para uploads (profile images, CVs).
+!!! tip "Governança de componentes"
+    Mantenha diagramas atualizados a cada entrega relevante e registre decisões arquiteturais no ADR correspondente (`docs/adr/`), assegurando rastreabilidade.
 
 ---
 
 # 7. Modelagem de Dados (ERD e Esquema)
 
-> Abaixo segue a **modelagem relacional** com campos, tipos sugeridos e índices. Inclui também um **exemplo de schema Prisma**.
+> **Resumo:** descreve a modelagem relacional, campos essenciais, índices e exemplo de implementação com Prisma.
 
 ## 7.1 Tabelas Principais
 
@@ -287,6 +298,11 @@ Arquitetura **modular** com separação clara entre UI (Next.js), API (Server Co
 **Índices:** `email (unique)`, `role`, `course`
 
 ---
+
+!!! info "Convenções de nomenclatura"
+    - Campos em inglês, snake_case no banco e camelCase no Prisma.  
+    - Tabelas auditáveis devem conter `created_at` e `updated_at` com gatilhos automáticos.  
+    - Foreign keys nomeadas com sufixo `_id`.
 
 ### `vacancies`
 
@@ -480,9 +496,11 @@ model Medal {
 
 ---
 
-# 8. API — Endpoints, Contratos e Exemplos
+# 8. API, Endpoints, Contratos e Exemplos
 
-> As rotas são organizadas sob `src/app/api/...`. Preferir uso de Server Actions (Next.js) para operações seguras quando aplicável; manter REST para interoperabilidade.
+> **Resumo:** cataloga convenções de API, endpoints prioritários e payloads de referência para integração e QA.
+
+> As rotas são organizadas sob `src/app/api/...`. Priorize Server Actions (Next.js) quando aplicável e mantenha REST para interoperabilidade externa.
 
 ## 8.1 Convenções
 
@@ -492,6 +510,9 @@ model Medal {
 * Autenticação: cookie HttpOnly + header `Authorization: Bearer <token>` para APIs externas.
 * Paginação: query `?page=1&limit=20`.
 * Filtros: `?course=Engenharia&status=ABERTA`.
+
+!!! warning "Autenticação para integrações externas"
+    Para consumo por terceiros, exija `Authorization: Bearer <token>` emitido por canal seguro e restrinja escopos com base nas permissões RBAC.
 
 ---
 
@@ -682,6 +703,8 @@ model Medal {
 
 # 9. Validação e Schemas (Zod)
 
+> **Resumo:** define estratégia centralizada de validação com Zod para garantir contratos consistentes e segurança de entrada.
+
 > Para centralização, criar pasta `src/lib/schemas/` com validações Zod por rota.
 
 ### Exemplo: Schema `CreateVacancySchema`
@@ -711,7 +734,9 @@ export const ApplySchema = z.object({
 
 ---
 
-# 10. Fluxos Críticos 
+# 10. Fluxos Críticos
+
+> **Resumo:** detalha sequências ponta a ponta que suportam jornadas de maior risco operacional ou de negócio.
 
 ## 10.1 Fluxo: Registro → Vaga → Candidatura → Decisão
 
@@ -736,6 +761,8 @@ export const ApplySchema = z.object({
 ---
 
 # 11. Segurança, Criptografia e Conformidade
+
+> **Resumo:** estabelece diretrizes de proteção, mecanismos criptográficos e aderência normativa para manter o NeedUK confiável.
 
 ## 11.1 Diretrizes Gerais
 
@@ -762,6 +789,9 @@ export const ApplySchema = z.object({
 * **Brute Force:** Rate limiting por IP + progressive delay; lockout após N tentativas.
 * **Upload Malware:** escanear arquivos com serviço de antivírus (opcional) antes de disponibilizar.
 
+!!! danger "Pontos de atenção"
+    Incidentes de segurança devem ser reportados imediatamente ao canal `#security` e registrados em até 24h no inventário de riscos (Seção 17).
+
 ## 11.5 Criptografia
 
 * Senhas: bcrypt (cost >= 12) ou argon2.
@@ -776,6 +806,8 @@ export const ApplySchema = z.object({
 ---
 
 # 12. Qualidade, Testes e Métricas
+
+> **Resumo:** define estratégia de validação contínua, indicadores-chave e etapas de pipeline para garantir excelência operacional.
 
 ## 12.1 Estratégia de Testes
 
@@ -802,6 +834,8 @@ export const ApplySchema = z.object({
 
 # 13. Infraestrutura, Deploy e CI/CD
 
+> **Resumo:** orienta configuração de ambientes, variáveis sensíveis e pipelines de entrega contínua.
+
 ## 13.1 Infraestrutura Recomendada
 
 * **Hosting (Frontend/Server):** Vercel (Next.js) ou similar
@@ -812,12 +846,18 @@ export const ApplySchema = z.object({
 
 ## 13.2 Variáveis de Ambiente (essenciais)
 
-* `DATABASE_URL`
-* `NEXTAUTH_SECRET` (ou Better Auth secret)
-* `JWT_SECRET`
-* `SUPABASE_URL`, `SUPABASE_KEY`
-* `REDIS_URL`
-* `SENTRY_DSN` (observability)
+| Variável          | Descrição                               | Ambientes |
+| ----------------- | --------------------------------------- | --------- |
+| `DATABASE_URL`    | Conexão PostgreSQL (Supabase)           | Todos     |
+| `NEXTAUTH_SECRET` | Segredo Better Auth / NextAuth          | Todos     |
+| `JWT_SECRET`      | Assinatura de tokens externos           | Todos     |
+| `SUPABASE_URL`    | Endpoint da instância Supabase          | Todos     |
+| `SUPABASE_KEY`    | Chave de serviço Supabase               | Server    |
+| `REDIS_URL`       | Cache Redis / BullMQ (opcional)         | Server    |
+| `SENTRY_DSN`      | Observabilidade (Sentry)                | Prod/Stg  |
+
+!!! note "Rotação de segredos"
+    Padronize rotação trimestral e registre as mudanças no runbook de segurança (Anexo 20.2).
 
 ## 13.3 CI/CD (exemplo GitHub Actions)
 
@@ -835,6 +875,8 @@ export const ApplySchema = z.object({
 ---
 
 # 14. Operações e Observabilidade
+
+> **Resumo:** apresenta mecanismos de logging, tracing, monitoramento e runbooks para resposta a incidentes.
 
 ## 14.1 Logs
 
@@ -856,9 +898,14 @@ export const ApplySchema = z.object({
 * **High error rate 5xx:** checar deploys recentes, rolls back se necessário.
 * **Email delivery failure:** checar provider (Sendgrid) e filas.
 
+!!! info "Canal de resposta"
+    Qualquer execução de runbook deve ser registrada no ticket correspondente (Jira) e comunicada no canal `#ops` com status a cada 30 minutos até estabilização.
+
 ---
 
 # 15. Backup, Recovery e Plano de Continuidade
+
+> **Resumo:** descreve políticas de backup, objetivos de recuperação e exercícios periódicos de resiliência.
 
 ## 15.1 Backup Policy
 
@@ -881,6 +928,8 @@ export const ApplySchema = z.object({
 ---
 
 # 16. Gestão de Projeto e Governança
+
+> **Resumo:** define estrutura organizacional, rituais ágeis e responsabilidades para sustentação do roadmap.
 
 ## 16.1 Estrutura de Equipe
 
@@ -916,32 +965,22 @@ export const ApplySchema = z.object({
 
 # 17. Riscos, Mitigações e Registro
 
+> **Resumo:** cataloga riscos prioritários, impactos e medidas preventivas associadas.
+
 ## 17.1 Registro de Riscos (exemplos)
 
-1. **Risco:** Falhas de segurança (exposição de dados).
-
-   * **Impacto:** Alto
-   * **Probabilidade:** Média
-   * **Mitigação:** Revisões SAST, pentest, hardening, criptografia, política de segredos.
-
-2. **Risco:** Baixa adoção pelos usuários.
-
-   * **Impacto:** Médio
-   * **Mitigação:** UX research, integração com universidades, campanhas de onboarding.
-
-3. **Risco:** Gargalos de performance no DB.
-
-   * **Impacto:** Alto
-   * **Mitigação:** Índices, cache, otimização de queries, read replicas.
-
-4. **Risco:** Perda de dados em deploy.
-
-   * **Impacto:** Alto
-   * **Mitigação:** migrations controladas, backups, rollback planejado.
+| Risco                               | Impacto | Probabilidade | Mitigação principal                                         |
+| ----------------------------------- | ------- | ------------- | ----------------------------------------------------------- |
+| Exposição de dados sensíveis        | Alto    | Média         | SAST + pentest, hardening, criptografia, gestão de segredos |
+| Baixa adoção do produto             | Médio   | Média         | Pesquisa UX, parcerias com universidades, onboarding guiado |
+| Gargalos de performance no banco    | Alto    | Média         | Índices, cache, tuning de queries, read replicas            |
+| Perda de dados durante deploy       | Alto    | Baixa         | Migrations controladas, backups, plano de rollback          |
 
 ---
 
 # 18. Roadmap e Evolução
+
+> **Resumo:** apresenta marcos entregues e incrementos planejados, orientando priorização e comunicação.
 
 ## Versão 1.0 (Entregue)
 
@@ -963,9 +1002,14 @@ export const ApplySchema = z.object({
 
 * Aplicativo móvel nativo (React Native) + chat interno.
 
+!!! tip "Gestão de roadmap"
+    Revise prioridades a cada trimestre e alinhe releases com a agenda acadêmica para maximizar adoção de alunos e parceiros.
+
 ---
 
 # 19. Padrões de Código e Processos de Contribuição
+
+> **Resumo:** estabelece regras de versionamento, estilo e revisão para contribuições seguras.
 
 ## 19.1 Branch Strategy
 
@@ -977,6 +1021,11 @@ export const ApplySchema = z.object({
 
 * PR title: `feat|fix(scope): description`
 * Checklist: lint passing, tests passing, changelog entry, docs atualizadas, 2 approvals.
+
+!!! important "Gates obrigatórios antes do merge"
+    1. Pipeline `ci.yml` concluído com sucesso.  
+    2. Revisão dupla concluída no GitHub.  
+    3. Issue vinculada no Jira com status `Ready for Release`.
 
 ## 19.3 Code Style
 
@@ -996,7 +1045,9 @@ export const ApplySchema = z.object({
 
 ---
 
-# 20. Anexos — Modelos, Runbooks e Checklists
+# 20. Anexos (Modelos, Runbooks e Checklists)
+
+> **Resumo:** fornece artefatos complementares para execução operacional e governança.
 
 ## 20.1 Modelo de Pull Request (template)
 
@@ -1030,9 +1081,12 @@ export const ApplySchema = z.object({
 
 ---
 
+!!! note "Uso dos anexos"
+    Os anexos funcionam como scripts prontos para execução operacional. Ajuste-os conforme o contexto da release e armazene evidências em repositório controlado.
+
 # Conclusão
 
-O presente documento foi elaborado para servir como referência única e fonte autoritativa sobre o sistema **NeedUK**, cobrindo todos os aspectos críticos de concepção, implementação, operação e evolução. Ele fornece base suficiente para desenvolvimento contínuo, auditoria de segurança, governança e entrega confiável do produto.
+Este material consolida as decisões técnicas e operacionais que sustentam o **NeedUK**, servindo como referência autorizada para desenvolvimento contínuo, auditorias, governança e expansão do produto. Atualizações devem seguir o fluxo de revisão descrito em Padrões de Código para preservar consistência e rastreabilidade.
 
 ---
 

@@ -68,72 +68,30 @@ extra:
 
 nav:
   - Início: index.md
-  - Visão Geral:
-      - Introdução: overview/introduction.md
-      - Arquitetura: overview/architecture.md
-      - Escopo e Limitações: overview/scope.md
-  - Usuários:
-      - Perfis de Usuário: users/profiles.md
-      - Permissões e RBAC: users/permissions.md
-  - Requisitos:
-      - Requisitos Funcionais: requirements/functional.md
-      - Requisitos Não-Funcionais: requirements/non-functional.md
-  - Arquitetura:
-      - Visão Geral: architecture/overview.md
-      - Componentes: architecture/components.md
-      - Diagrama Lógico: architecture/diagram.md
-  - Modelagem de Dados:
-      - ERD e Esquema: data/erd.md
-      - Tabelas Detalhadas: data/tables.md
-      - Schema Prisma: data/prisma.md
-  - API:
-      - Convenções: api/conventions.md
-      - Autenticação: api/auth.md
-      - Perfis: api/profiles.md
-      - Atividades: api/activities.md
-      - Vagas: api/vacancies.md
-      - Candidaturas: api/applications.md
-      - Notificações: api/notifications.md
-      - Medalhas: api/medals.md
-      - Códigos de Erro: api/errors.md
-  - Validação:
-      - Schemas Zod: validation/schemas.md
-  - Fluxos:
-      - Fluxos Críticos: flows/critical-flows.md
-  - Segurança:
-      - Diretrizes: security/guidelines.md
-      - Autenticação e Autorização: security/auth.md
-      - Proteção contra Ataques: security/attacks.md
-      - Criptografia: security/encryption.md
-      - Compliance: security/compliance.md
-  - Qualidade:
-      - Estratégia de Testes: quality/testing.md
-      - Métricas: quality/metrics.md
-      - Pipelines: quality/pipelines.md
-  - Infraestrutura:
-      - Visão Geral: infrastructure/overview.md
-      - Deploy e CI/CD: infrastructure/cicd.md
-      - Variáveis de Ambiente: infrastructure/environment.md
+  - Panorama:
+      - Visão Executiva: index.md#visao-executiva
+      - Introdução: index.md#1-introducao
+      - Visão Geral: index.md#2-visao-geral-do-sistema
+      - Escopo e Limitações: index.md#3-escopo-e-limitacoes
+      - Público-Alvo e Perfis: index.md#4-publico-alvo-e-perfis-de-usuario
+  - Fundamentos Técnicos:
+      - Requisitos Detalhados: index.md#5-requisitos-detalhados
+      - Arquitetura Técnica e Lógica: index.md#6-arquitetura-tecnica-e-logica
+      - Modelagem de Dados: index.md#7-modelagem-de-dados-erd-e-esquema
+      - API, Endpoints e Contratos: index.md#8-api-endpoints-contratos-e-exemplos
+      - Validação e Schemas (Zod): index.md#9-validacao-e-schemas-zod
+      - Fluxos Críticos: index.md#10-fluxos-criticos
+  - Confiabilidade:
+      - Segurança, Criptografia e Conformidade: index.md#11-seguranca-criptografia-e-conformidade
+      - Qualidade, Testes e Métricas: index.md#12-qualidade-testes-e-metricas
   - Operações:
-      - Observabilidade: operations/observability.md
-      - Logs e Tracing: operations/logging.md
-      - Monitoramento: operations/monitoring.md
-      - Runbooks: operations/runbooks.md
-  - Backup e Recovery:
-      - Política de Backup: backup/policy.md
-      - Plano de Continuidade: backup/continuity.md
-  - Gestão:
-      - Estrutura de Equipe: management/team.md
-      - Cerimônias: management/ceremonies.md
-      - RACI: management/raci.md
-  - Riscos:
-      - Registro de Riscos: risks/register.md
-      - Mitigações: risks/mitigations.md
-  - Roadmap:
-      - Evolução do Sistema: roadmap/evolution.md
-  - Contribuição:
-      - Padrões de Código: contributing/code-standards.md
-      - Processo de PR: contributing/pr-process.md
-  - Anexos:
-      - Templates: appendix/templates.md
-      - Checklists: appendix/checklists.md
+      - Infraestrutura, Deploy e CI/CD: index.md#13-infraestrutura-deploy-e-cicd
+      - Operações e Observabilidade: index.md#14-operacoes-e-observabilidade
+      - Backup, Recovery e Continuidade: index.md#15-backup-recovery-e-plano-de-continuidade
+  - Governança:
+      - Gestão de Projeto e Governança: index.md#16-gestao-de-projeto-e-governanca
+      - Riscos, Mitigações e Registro: index.md#17-riscos-mitigacoes-e-registro
+      - Roadmap e Evolução: index.md#18-roadmap-e-evolucao
+      - Padrões de Código e Processos de Contribuição: index.md#19-padroes-de-codigo-e-processos-de-contribuicao
+      - Anexos: index.md#20-anexos-modelos-runbooks-e-checklists
+  - Conclusão: index.md#conclusao
