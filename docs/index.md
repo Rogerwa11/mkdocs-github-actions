@@ -912,13 +912,6 @@ export const ApplySchema = z.object({
 | Release to prod        |      DevOps |           PO |            Dev Lead |     Team |
 | Security audit         |    Dev Lead |           PO | Security Consultant |     Team |
 
-## 16.5 Cronograma (Exemplo Simplificado)
-
-* **Sprint 0 (1 semana):** Setup infra, CI, DB schema inicial.
-* **Sprint 1-4 (8 semanas):** Core features (auth, profiles, vacancies, applications).
-* **Sprint 5-6 (4 semanas):** Activities, notifications, polishing.
-* **Sprint 7 (2 semanas):** QA final, performance, deploy.
-
 ---
 
 # 17. Riscos, Mitigações e Registro
