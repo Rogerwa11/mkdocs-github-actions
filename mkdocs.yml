@@ -2,43 +2,138 @@ site_name: Documentação NeedUK
 site_description: Documentação Técnica Integral do Sistema NeedUK
 site_author: Equipe NeedUK
 repo_url: https://rogerwa11.github.io/mkdocs-github-actions
-edit_uri: edit/main/docs/
 
 theme:
   name: material
   language: pt-BR
-  features:
-    - navigation.tabs
-    - navigation.sections
-    - content.code.copy
   palette:
     - scheme: default
       primary: indigo
-      accent: blue
-    - scheme: slate # Modo escuro opcional
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Modo escuro
+    - scheme: slate
       primary: indigo
-      accent: blue
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Modo claro
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+
+plugins:
+  - search:
+      lang: pt
+  - git-revision-date-localized:
+      enable_creation_date: true
+  - minify:
+      minify_html: true
 
 markdown_extensions:
-  - admonition
-  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - admonition
+  - pymdownx.details
   - tables
   - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+      toc_depth: 3
+
+extra:
+  version:
+    provider: mike
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/needuk
 
 nav:
   - Início: index.md
-  - Produto & Requisitos: requisitos.md
-  - Arquitetura & Dados: arquitetura.md
-  - API & Integração: api.md
-  - Infra & Segurança: seguranca-infra.md
-  - Qualidade: qualidade-testes.md
-  - Gestão & Governança: gestao.md
+  - Visão Geral:
+      - Introdução: overview/introduction.md
+      - Arquitetura: overview/architecture.md
+      - Escopo e Limitações: overview/scope.md
+  - Usuários:
+      - Perfis de Usuário: users/profiles.md
+      - Permissões e RBAC: users/permissions.md
+  - Requisitos:
+      - Requisitos Funcionais: requirements/functional.md
+      - Requisitos Não-Funcionais: requirements/non-functional.md
+  - Arquitetura:
+      - Visão Geral: architecture/overview.md
+      - Componentes: architecture/components.md
+      - Diagrama Lógico: architecture/diagram.md
+  - Modelagem de Dados:
+      - ERD e Esquema: data/erd.md
+      - Tabelas Detalhadas: data/tables.md
+      - Schema Prisma: data/prisma.md
+  - API:
+      - Convenções: api/conventions.md
+      - Autenticação: api/auth.md
+      - Perfis: api/profiles.md
+      - Atividades: api/activities.md
+      - Vagas: api/vacancies.md
+      - Candidaturas: api/applications.md
+      - Notificações: api/notifications.md
+      - Medalhas: api/medals.md
+      - Códigos de Erro: api/errors.md
+  - Validação:
+      - Schemas Zod: validation/schemas.md
+  - Fluxos:
+      - Fluxos Críticos: flows/critical-flows.md
+  - Segurança:
+      - Diretrizes: security/guidelines.md
+      - Autenticação e Autorização: security/auth.md
+      - Proteção contra Ataques: security/attacks.md
+      - Criptografia: security/encryption.md
+      - Compliance: security/compliance.md
+  - Qualidade:
+      - Estratégia de Testes: quality/testing.md
+      - Métricas: quality/metrics.md
+      - Pipelines: quality/pipelines.md
+  - Infraestrutura:
+      - Visão Geral: infrastructure/overview.md
+      - Deploy e CI/CD: infrastructure/cicd.md
+      - Variáveis de Ambiente: infrastructure/environment.md
+  - Operações:
+      - Observabilidade: operations/observability.md
+      - Logs e Tracing: operations/logging.md
+      - Monitoramento: operations/monitoring.md
+      - Runbooks: operations/runbooks.md
+  - Backup e Recovery:
+      - Política de Backup: backup/policy.md
+      - Plano de Continuidade: backup/continuity.md
+  - Gestão:
+      - Estrutura de Equipe: management/team.md
+      - Cerimônias: management/ceremonies.md
+      - RACI: management/raci.md
+  - Riscos:
+      - Registro de Riscos: risks/register.md
+      - Mitigações: risks/mitigations.md
+  - Roadmap:
+      - Evolução do Sistema: roadmap/evolution.md
+  - Contribuição:
+      - Padrões de Código: contributing/code-standards.md
+      - Processo de PR: contributing/pr-process.md
+  - Anexos:
+      - Templates: appendix/templates.md
+      - Checklists: appendix/checklists.md
